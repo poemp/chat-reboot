@@ -14,15 +14,11 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
+import bitoflife.chatterbean.aiml.Category;
+
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import bitoflife.chatterbean.aiml.Category;
-import bitoflife.chatterbean.aiml.Pattern;
-
-import co.aiml.*;
 
 public class Graphmaster
 {
