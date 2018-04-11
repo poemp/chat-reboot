@@ -21,48 +21,39 @@ import javax.xml.parsers.SAXParserFactory;
 import bitoflife.chatterbean.Graphmaster;
 import bitoflife.chatterbean.util.Searcher;
 
-public class AIMLParser
-{
+public class AIMLParser {
   /*
   Attributes
   */
 
-  private final Searcher searcher = new Searcher();
-  private final AIMLHandler handler = new AIMLHandler();
-  private SAXParser parser;
+    private final Searcher searcher = new Searcher();
+    private final AIMLHandler handler = new AIMLHandler();
+    private SAXParser parser;
 
   /*
   Constructor
   */
 
-  public AIMLParser() throws AIMLParserConfigurationException
-  {
-    try
-    {
-      parser = SAXParserFactory.newInstance().newSAXParser();
+    public AIMLParser() throws AIMLParserConfigurationException {
+        try {
+            parser = SAXParserFactory.newInstance().newSAXParser();
+        } catch (Exception e) {
+            throw new AIMLParserConfigurationException(e);
+        }
     }
-    catch (Exception e)
-    {
-      throw new AIMLParserConfigurationException(e);
-    }
-  }
 
   /*
   Methods
   */
 
-  public void parse(Graphmaster graphmaster, InputStream... sources) throws AIMLParserException
-  {
-    try
-    {
-      for (InputStream aiml : sources)
-        parser.parse(aiml, handler); // what's this?
+    public void parse(Graphmaster graphmaster, InputStream... sources) throws AIMLParserException {
+        try {
+            for (InputStream aiml : sources)
+                parser.parse(aiml, handler); // what's this?
 
-      graphmaster.append(handler.unload());
+            graphmaster.append(handler.unload());
+        } catch (Exception e) {
+            throw new AIMLParserException(e);
+        }
     }
-    catch (Exception e)
-    {
-      throw new AIMLParserException(e);
-    }
-  }
 }

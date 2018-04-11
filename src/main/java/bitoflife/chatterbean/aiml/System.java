@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -21,50 +21,43 @@ import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 import bitoflife.chatterbean.script.Interpreter;
 
-public class System extends TemplateElement
-{
+public class System extends TemplateElement {
   /*
   Constructors
   */
 
-  public System(Attributes attributes)
-  {
-  }
+    public System(Attributes attributes) {
+    }
 
-  public System(Object... children)
-  {
-    super(children);
-  }
+    public System(Object... children) {
+        super(children);
+    }
   
   /*
   Methods
   */
-  
-  public String process(Match match)
-  {
-    try
-    {
-      AliceBot bot = match.getCallback();
-      Context context = bot.getContext();
-      Interpreter interpreter = (Interpreter) context.property("beanshell.interpreter");
-      if (interpreter == null)
-        return "";
 
-      String script = super.process(match);
-      interpreter.variable("result", null);
-      interpreter.variable("match", match);
-      
-      Object evaluated = interpreter.evaluate(script);
-      Object result = interpreter.variable("result");
-      if (result == null) result = evaluated;
-      
-      interpreter.variable("match", null);
+    public String process(Match match) {
+        try {
+            AliceBot bot = match.getCallback();
+            Context context = bot.getContext();
+            Interpreter interpreter = (Interpreter) context.property("beanshell.interpreter");
+            if (interpreter == null)
+                return "";
 
-      return (result != null ? result.toString() : "");
+            String script = super.process(match);
+            interpreter.variable("result", null);
+            interpreter.variable("match", match);
+
+            Object evaluated = interpreter.evaluate(script);
+            Object result = interpreter.variable("result");
+            if (result == null) result = evaluated;
+
+            interpreter.variable("match", null);
+
+            return (result != null ? result.toString() : "");
+        } catch (Exception e) {
+            throw new RuntimeException("Evaluation error on <system> tag", e);
+        }
     }
-    catch (Exception e)
-    {
-      throw new RuntimeException("Evaluation error on <system> tag", e);
-    }
-  }
 }

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -19,52 +19,43 @@ import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 
-public class Bot extends TemplateElement
-{
+public class Bot extends TemplateElement {
   /*
   Attributes
   */
 
-  private String name;
+    private String name;
 
   /*
   Constructors
   */
 
-  public Bot(Attributes attributes)
-  {
-    name = attributes.getValue(0);
-  }
+    public Bot(Attributes attributes) {
+        name = attributes.getValue(0);
+    }
 
-  public Bot(String name)
-  {
-    this.name = name;
-  }
+    public Bot(String name) {
+        this.name = name;
+    }
 
   /*
   Methods
   */
 
-  public boolean equals(Object obj)
-  {
-    return (super.equals(obj) && name.equals(((Bot) obj).name));
-  }
-
-  public int hashCode()
-  {
-    return name.hashCode();
-  }
-
-  public String process(Match match)
-  {
-    try
-    {
-      String value = (String) match.getCallback().getContext().property("bot." + name);
-      return (value != null ? value : "");
+    public boolean equals(Object obj) {
+        return (super.equals(obj) && name.equals(((Bot) obj).name));
     }
-    catch (NullPointerException e)
-    {
-      return "";
+
+    public int hashCode() {
+        return name.hashCode();
     }
-  }
+
+    public String process(Match match) {
+        try {
+            String value = (String) match.getCallback().getContext().property("bot." + name);
+            return (value != null ? value : "");
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
 }

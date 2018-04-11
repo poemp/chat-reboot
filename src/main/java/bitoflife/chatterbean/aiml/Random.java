@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -20,37 +20,32 @@ import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 
-public class Random extends TemplateElement
-{
+public class Random extends TemplateElement {
   /*
   Constructor
   */
-  
-  public Random()
-  {
-  }
-  
-  public Random(Attributes attributes)
-  {
-  }
-  
-  public Random(Object... children)
-  {
-    super(children);
-  }
+
+    public Random() {
+    }
+
+    public Random(Attributes attributes) {
+    }
+
+    public Random(Object... children) {
+        super(children);
+    }
   
   /*
   Methods
   */
-  
-  public String process(Match match)
-  {
-    AliceBot bot = match.getCallback();
-    Context context = bot.getContext();
-    java.util.Random random = context.random();
 
-    int n = children().size();    
-    TemplateElement child = getChildren(random.nextInt(n));
-    return child.process(match);
-  }
+    public String process(Match match) {
+        AliceBot bot = match.getCallback();
+        Context context = bot.getContext();
+        java.util.Random random = context.random();
+
+        int n = children().size();
+        TemplateElement child = getChildren(random.nextInt(n));
+        return child.process(match);
+    }
 }

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -14,11 +14,10 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.script;
 
-public interface Interpreter
-{
-  public Object evaluate(String script) throws InterpretingException;
-  
-  public Object variable(String name) throws InterpretingException;
-  
-  public void variable(String name, Object value) throws InterpretingException;
+public interface Interpreter {
+    public Object evaluate(String script) throws InterpretingException;
+
+    public Object variable(String name) throws InterpretingException;
+
+    public void variable(String name, Object value) throws InterpretingException;
 }

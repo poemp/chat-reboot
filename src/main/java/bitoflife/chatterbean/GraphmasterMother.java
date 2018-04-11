@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -20,21 +20,19 @@ import bitoflife.chatterbean.aiml.Star;
 import bitoflife.chatterbean.aiml.Text;
 import bitoflife.chatterbean.aiml.Category;
 
-public class GraphmasterMother
-{
+public class GraphmasterMother {
   /*
   Methods
   */
 
-  public Graphmaster newInstance()
-  {
-    Graphmaster root = new Graphmaster();
+    public Graphmaster newInstance() {
+        Graphmaster root = new Graphmaster();
 
-    root.append(new Category(" SAY _ AGAIN ", "What, again? \"", new Star(1), "\"."));
-    root.append(new Category(" SAY IT NOW ", "Whatever you want..."));
-    root.append(new Category(" SAY * ", new Star(1), "!"));
-    root.append(new Category(" DO YOU SEE THE * IN MY EYES ", "Yes, I see the ", new Star(1), " in your eyes."));
+        root.append(new Category(" SAY _ AGAIN ", "What, again? \"", new Star(1), "\"."));
+        root.append(new Category(" SAY IT NOW ", "Whatever you want..."));
+        root.append(new Category(" SAY * ", new Star(1), "!"));
+        root.append(new Category(" DO YOU SEE THE * IN MY EYES ", "Yes, I see the ", new Star(1), " in your eyes."));
 
-    return root;
-  }
+        return root;
+    }
 }

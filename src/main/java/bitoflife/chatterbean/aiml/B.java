@@ -7,27 +7,23 @@ import org.xml.sax.Attributes;
 import bitoflife.chatterbean.Match;
 
 
-public class B extends TemplateElement
-{
+public class B extends TemplateElement {
   /*
   Constructors
   */
 
-  public B(Attributes attributes)
-  {
-  }
+    public B(Attributes attributes) {
+    }
 
-  public B(Object... children)
-  {
-    super(children);
-  }
+    public B(Object... children) {
+        super(children);
+    }
 
   /*
   Methods
   */
 
-  public String process(Match match)
-  {
-    return "";
-  }
+    public String process(Match match) {
+        return "";
+    }
 }

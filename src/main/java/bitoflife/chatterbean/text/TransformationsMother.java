@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -15,17 +15,16 @@ You should have received a copy of the GNU General Public License along with Cha
 package bitoflife.chatterbean.text;
 
 import java.io.FileInputStream;
+
 import bitoflife.chatterbean.parser.TransformationsParser;
 
-public class TransformationsMother
-{
+public class TransformationsMother {
   /*
   Methods
   */
 
-  public Transformations newInstance() throws Exception
-  {
-    TransformationsParser parser = new TransformationsParser();
-    return parser.parse(new FileInputStream("Bots/splitters.xml"), new FileInputStream("Bots/substitutions.xml"));
-  }
+    public Transformations newInstance() throws Exception {
+        TransformationsParser parser = new TransformationsParser();
+        return parser.parse(new FileInputStream("Bots/splitters.xml"), new FileInputStream("Bots/substitutions.xml"));
+    }
 }

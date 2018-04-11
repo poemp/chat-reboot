@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@bol.com.br
 ICQ: 2490863
 
@@ -14,15 +14,14 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
-import java.util.List;
+        import java.util.List;
 
-public interface AIMLElement
-{
+public interface AIMLElement {
   /*
   Method Section
   */
 
-  public void appendChild(AIMLElement child);
+    public void appendChild(AIMLElement child);
 
-  public void appendChildren(List<AIMLElement> children);
+    public void appendChildren(List<AIMLElement> children);
 }

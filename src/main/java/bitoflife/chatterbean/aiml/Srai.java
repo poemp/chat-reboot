@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -18,32 +18,27 @@ import org.xml.sax.Attributes;
 import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Match;
 
-public class Srai extends TemplateElement
-{
+public class Srai extends TemplateElement {
   /*
   Constructor Section
   */
 
-  public Srai(Attributes attributes)
-  {
-  }
-  
-  public Srai(Object... children)
-  {
-    super(children);
-  }
+    public Srai(Attributes attributes) {
+    }
 
-  public Srai(int index)
-  {
-    super(new Star(index));
-  }
+    public Srai(Object... children) {
+        super(children);
+    }
+
+    public Srai(int index) {
+        super(new Star(index));
+    }
   
   /*
   Method Section
   */
-  
-  public String process(Match match)
-  {
+
+    public String process(Match match) {
 //    String request = super.process(match);
 //
 //    try
@@ -55,11 +50,10 @@ public class Srai extends TemplateElement
 //    {
 //      throw new RuntimeException("While trying to respond \"" + request + "\"", e);
 //    }
-	  return "";
-  }
-  
-  public String toString()
-  {
-    return "<srai>" + super.toString() + "</srai>";
-  }
+        return "";
+    }
+
+    public String toString() {
+        return "<srai>" + super.toString() + "</srai>";
+    }
 }

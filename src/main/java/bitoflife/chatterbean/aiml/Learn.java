@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+
 import org.xml.sax.Attributes;
 
 import bitoflife.chatterbean.AliceBot;
@@ -25,44 +26,37 @@ import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 import bitoflife.chatterbean.Graphmaster;
 
-public class Learn extends TemplateElement
-{
+public class Learn extends TemplateElement {
   /*
   Constructors
   */
 
-  public Learn(Attributes attributes)
-  {
-  }
+    public Learn(Attributes attributes) {
+    }
 
-  public Learn(Object... children)
-  {
-    super(children);
-  }
+    public Learn(Object... children) {
+        super(children);
+    }
 
   /*
   Methods
   */
 
-  public String process(Match match)
-  {
-    AliceBot bot = null;
-    try
-    {
-      bot = match.getCallback();
-      Graphmaster graphmaster = bot.getGraphmaster();
+    public String process(Match match) {
+        AliceBot bot = null;
+        try {
+            bot = match.getCallback();
+            Graphmaster graphmaster = bot.getGraphmaster();
 
-      String address = super.process(match);
-      URL url = new URL(address);
+            String address = super.process(match);
+            URL url = new URL(address);
 
-      AIMLParser parser = new AIMLParser();
-      parser.parse(graphmaster, url.openStream());
+            AIMLParser parser = new AIMLParser();
+            parser.parse(graphmaster, url.openStream());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return "";
     }
-    catch (Exception e)
-    {
-      throw new RuntimeException(e);
-    }
-
-    return "";
-  }
 }

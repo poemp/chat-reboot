@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@bol.com.br
 ICQ: 2490863
 
@@ -16,49 +16,45 @@ package bitoflife.chatterbean.util;
 
 import java.net.URL;
 import java.util.List;
+
 import junit.framework.TestCase;
 
-public class SearcherTest extends TestCase
-{
+public class SearcherTest extends TestCase {
   /*
   Attribute Section
   */
 
-  private Searcher searcher;
+    private Searcher searcher;
 
   /* 
   Event Section
   */
 
-  protected void setUp()
-  {
-    searcher = new Searcher();
-  }
+    protected void setUp() {
+        searcher = new Searcher();
+    }
 
-  protected void tearDown()
-  {
-    searcher = null;
-  }
+    protected void tearDown() {
+        searcher = null;
+    }
 
   /*
   Method Section
   */
-  
-  public void testDirFilesystem()
-  {
-    String[] paths = searcher.dir("Bots/Alice", ".+\\.aiml");
-    
-    assertEquals("Bots/Alice/Again.aiml", paths[0]);
-    assertEquals("Bots/Alice/Alice.aiml", paths[1]);
-    assertEquals("Bots/Alice/Astrology.aiml", paths[2]);
-  }
-  
-  public void testDirURL() throws Exception
-  {
-    String[] paths = searcher.dir(new URL("file", "localhost", "./"), "Bots/Alice", ".+\\.aiml");
-    
-    assertEquals("Bots/Alice/Again.aiml", paths[0]);
-    assertEquals("Bots/Alice/Alice.aiml", paths[1]);
-    assertEquals("Bots/Alice/Astrology.aiml", paths[2]);
-  }
+
+    public void testDirFilesystem() {
+        String[] paths = searcher.dir("Bots/Alice", ".+\\.aiml");
+
+        assertEquals("Bots/Alice/Again.aiml", paths[0]);
+        assertEquals("Bots/Alice/Alice.aiml", paths[1]);
+        assertEquals("Bots/Alice/Astrology.aiml", paths[2]);
+    }
+
+    public void testDirURL() throws Exception {
+        String[] paths = searcher.dir(new URL("file", "localhost", "./"), "Bots/Alice", ".+\\.aiml");
+
+        assertEquals("Bots/Alice/Again.aiml", paths[0]);
+        assertEquals("Bots/Alice/Alice.aiml", paths[1]);
+        assertEquals("Bots/Alice/Astrology.aiml", paths[2]);
+    }
 }

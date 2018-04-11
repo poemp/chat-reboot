@@ -18,46 +18,40 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Response extends Request
-{
+public class Response extends Request {
   /*
   Constructor
   */
 
-  public Response()
-  {
-    super();
-  }
+    public Response() {
+        super();
+    }
 
-  public Response(String original)
-  {
-    super(original);
-  }
-  
-  public Response(String original, Sentence... sentences)
-  {
-    super(original, sentences);
-  }
+    public Response(String original) {
+        super(original);
+    }
+
+    public Response(String original, Sentence... sentences) {
+        super(original, sentences);
+    }
 
   /*
   Methods
   */
 
-  public void append(String output)
-  {
-    StringBuilder builder = new StringBuilder();
-    String original = getOriginal();
+    public void append(String output) {
+        StringBuilder builder = new StringBuilder();
+        String original = getOriginal();
 
-    //fixed by lcl for StringIndexOutOfBoundsException.
-    if (original != null && original.length() > 1)
-    {
-      builder.append(original);
-      int index = builder.length() - 1;
-      if (builder.charAt(index) != ' ')
-        builder.append(' ');
+        //fixed by lcl for StringIndexOutOfBoundsException.
+        if (original != null && original.length() > 1) {
+            builder.append(original);
+            int index = builder.length() - 1;
+            if (builder.charAt(index) != ' ')
+                builder.append(' ');
+        }
+
+        builder.append(output);
+        setOriginal(builder.toString());
     }
-    
-    builder.append(output);
-    setOriginal(builder.toString());
-  }
 }

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -17,28 +17,24 @@ package bitoflife.chatterbean.aiml;
 import org.xml.sax.Attributes;
 import bitoflife.chatterbean.Match;
 
-public class Think extends TemplateElement
-{
+public class Think extends TemplateElement {
   /*
   Constructors
   */
 
-  public Think(Attributes attributes)
-  {
-  }
-  
-  public Think(Object... children)
-  {
-    super(children);
-  }
+    public Think(Attributes attributes) {
+    }
+
+    public Think(Object... children) {
+        super(children);
+    }
   
   /*
   Methods
   */
-  
-  public String process(Match match)
-  {
-    super.process(match);
-    return "";
-  }
+
+    public String process(Match match) {
+        super.process(match);
+        return "";
+    }
 }

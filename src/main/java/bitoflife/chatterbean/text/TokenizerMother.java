@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -15,18 +15,17 @@ You should have received a copy of the GNU General Public License along with Cha
 package bitoflife.chatterbean.text;
 
 import java.io.FileInputStream;
+
 import bitoflife.chatterbean.config.TokenizerConfig;
 import bitoflife.chatterbean.config.TokenizerConfigStream;
 
-public class TokenizerMother
-{
+public class TokenizerMother {
   /*
   Method Section
   */
-  
-  public static Tokenizer newInstance() throws Exception
-  {
-    TokenizerConfig config = new TokenizerConfigStream(new FileInputStream("Bots/splitters.xml"));
-    return new Tokenizer(config);
-  }
+
+    public static Tokenizer newInstance() throws Exception {
+        TokenizerConfig config = new TokenizerConfigStream(new FileInputStream("Bots/splitters.xml"));
+        return new Tokenizer(config);
+    }
 }

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -15,21 +15,20 @@ You should have received a copy of the GNU General Public License along with Cha
 package bitoflife.chatterbean;
 
 import java.util.Arrays;
+
 import junit.framework.TestCase;
 import bitoflife.chatterbean.text.Sentence;
 
-public class MatchTest extends TestCase
-{
+public class MatchTest extends TestCase {
   /*
   Methods
   */
-  
-  public void testMatchPath()
-  {
-    Match match = new Match(new Sentence(" Say goodbye again. ", new Integer[] {0, 4, 12, 19}, " SAY GOODBYE AGAIN "));
-    
-    String[] expected = {"SAY", "GOODBYE", "AGAIN", "<THAT>", "*", "<TOPIC>", "*"};
-    String[] actual = match.getMatchPath();
-    assertTrue(Arrays.toString(expected) + ' ' + Arrays.toString(actual), Arrays.equals(expected, actual));
-  }
+
+    public void testMatchPath() {
+        Match match = new Match(new Sentence(" Say goodbye again. ", new Integer[]{0, 4, 12, 19}, " SAY GOODBYE AGAIN "));
+
+        String[] expected = {"SAY", "GOODBYE", "AGAIN", "<THAT>", "*", "<TOPIC>", "*"};
+        String[] actual = match.getMatchPath();
+        assertTrue(Arrays.toString(expected) + ' ' + Arrays.toString(actual), Arrays.equals(expected, actual));
+    }
 }

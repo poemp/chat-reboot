@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2006 Hélio Perroni Filho
+Copyleft (C) 2006 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -15,20 +15,19 @@ You should have received a copy of the GNU General Public License along with Cha
 package bitoflife.chatterbean;
 
 /**
-Basic exception class for exceptions thrown from ChatterBean's main class.
-*/
-public class ChatterBeanException extends RuntimeException
-{  
-  /** Version class identifier for the serialization engine. Matches the number of the last revision where the class was created / modified. */
-  private static final long serialVersionUID = 8L;
-  
-  public ChatterBeanException(String message)
-  {
-    super(message);
-  }
-  
-  public ChatterBeanException(Exception cause)
-  {
-    super(cause);
-  }
+ * Basic exception class for exceptions thrown from ChatterBean's main class.
+ */
+public class ChatterBeanException extends RuntimeException {
+    /**
+     * Version class identifier for the serialization engine. Matches the number of the last revision where the class was created / modified.
+     */
+    private static final long serialVersionUID = 8L;
+
+    public ChatterBeanException(String message) {
+        super(message);
+    }
+
+    public ChatterBeanException(Exception cause) {
+        super(cause);
+    }
 }

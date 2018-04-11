@@ -14,43 +14,43 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
-public class TestSuite extends junit.framework.TestSuite
-{
+public class TestSuite extends junit.framework.TestSuite {
   /*
   Attributes
   */
-  
-  /** Names of the test classes to include in the test. */
-  private static String[] testNames;
+
+    /**
+     * Names of the test classes to include in the test.
+     */
+    private static String[] testNames;
 
   /*
   Methods
   */
-  
-  /**
-  Adds all the known unit tests to the suite.
-  
-  @param suite The test suite to which the known unit tests must be added. 
-  */
-  private static void addAllTests(TestSuite suite)
-  {
-    suite.addTestSuite(bitoflife.chatterbean.AliceBotTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.GraphmasterTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.LoggerTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.MatchTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.aiml.AIMLHandlerTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.aiml.AIMLParserTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.aiml.CategoryTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.aiml.SystemTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.aiml.TemplateElementTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.parser.ContextParserTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.text.SentenceTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.text.SentenceSplitterTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.text.TransformationsTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.text.SubstitutionTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.text.TokenizerTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.util.SearcherTest.class);
-    suite.addTestSuite(bitoflife.chatterbean.util.SequenceTest.class);
-  }
+
+    /**
+     * Adds all the known unit tests to the suite.
+     *
+     * @param suite The test suite to which the known unit tests must be added.
+     */
+    private static void addAllTests(TestSuite suite) {
+        suite.addTestSuite(bitoflife.chatterbean.AliceBotTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.GraphmasterTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.LoggerTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.MatchTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.aiml.AIMLHandlerTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.aiml.AIMLParserTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.aiml.CategoryTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.aiml.SystemTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.aiml.TemplateElementTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.parser.ContextParserTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.text.SentenceTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.text.SentenceSplitterTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.text.TransformationsTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.text.SubstitutionTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.text.TokenizerTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.util.SearcherTest.class);
+        suite.addTestSuite(bitoflife.chatterbean.util.SequenceTest.class);
+    }
 
 }

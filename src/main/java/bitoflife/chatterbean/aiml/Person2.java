@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -19,30 +19,26 @@ import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Match;
 import bitoflife.chatterbean.text.Transformations;
 
-public class Person2 extends TemplateElement
-{
+public class Person2 extends TemplateElement {
   /*
   Constructor Section
   */
 
-  public Person2(Attributes attributes)
-  {
-  }
+    public Person2(Attributes attributes) {
+    }
 
-  public Person2(Object... children)
-  {
-    super(children);
-  }
+    public Person2(Object... children) {
+        super(children);
+    }
 
   /*
   Method Section
   */
 
-  public String process(Match match)
-  {
-    String input = super.process(match);
-    AliceBot bot = match.getCallback();
-    Transformations transformations = bot.transformations();
-    return transformations.person2(input);
-  }
+    public String process(Match match) {
+        String input = super.process(match);
+        AliceBot bot = match.getCallback();
+        Transformations transformations = bot.transformations();
+        return transformations.person2(input);
+    }
 }

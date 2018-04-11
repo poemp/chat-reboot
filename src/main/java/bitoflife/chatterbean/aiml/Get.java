@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -19,55 +19,46 @@ import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 
-public class Get extends TemplateElement
-{
+public class Get extends TemplateElement {
   /*
   Attributes
   */
-  
-  private String name;
+
+    private String name;
   
   /*
   Constructors
   */
 
-  public Get(Attributes attributes)
-  {
-    name = attributes.getValue(0);
-  }
+    public Get(Attributes attributes) {
+        name = attributes.getValue(0);
+    }
 
-  public Get(String name)
-  {
-    this.name = name;
-  }
+    public Get(String name) {
+        this.name = name;
+    }
   
   /*
   Methods
   */
-  
-  public boolean equals(Object compared)
-  {
-    if (compared == null || !(compared instanceof Get))
-      return false;
-    else
-      return name.equals(((Get) compared).name);
-  }
-  
-  public int hashCode()
-  {
-    return name.hashCode();
-  }
 
-  public String process(Match match)
-  {
-    try
-    {
-      String value = (String) match.getCallback().getContext().property("predicate." + name);
-      return (value != null ? value : "");
+    public boolean equals(Object compared) {
+        if (compared == null || !(compared instanceof Get))
+            return false;
+        else
+            return name.equals(((Get) compared).name);
     }
-    catch (NullPointerException e)
-    {
-      return "";
+
+    public int hashCode() {
+        return name.hashCode();
     }
-  }
+
+    public String process(Match match) {
+        try {
+            String value = (String) match.getCallback().getContext().property("predicate." + name);
+            return (value != null ? value : "");
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
 }

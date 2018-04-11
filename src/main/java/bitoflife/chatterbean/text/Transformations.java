@@ -28,325 +28,295 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.UNICODE_CASE;
 
 /**
-Provides operations for normalizing a request, before submiting it to the matching operation.
-*/
-public class Transformations
-{
+ * Provides operations for normalizing a request, before submiting it to the matching operation.
+ */
+public class Transformations {
   /*
   Inner Classes
   */
 
-  private class Mapper
-  {
+    private class Mapper {
     /*
     Attributes
     */
 
-    private int charIndex;
-    private int listIndex;
-    private int spaceCount;
+        private int charIndex;
+        private int listIndex;
+        private int spaceCount;
 
-    private final List<Integer> mappings = new LinkedList<Integer>();
+        private final List<Integer> mappings = new LinkedList<Integer>();
 
-    private String input;
-    private String find;
-    private String replace;
+        private String input;
+        private String find;
+        private String replace;
 
     /*
     Constructor
     */
 
-    public Mapper(String input)
-    {
-      char[] chars = input.toCharArray();
-      for (int i = 0, n = chars.length; i < n; i++){
-        if (chars[i] == ' ')
-          mappings.add(i);
-      }
-    }
+        public Mapper(String input) {
+            char[] chars = input.toCharArray();
+            for (int i = 0, n = chars.length; i < n; i++) {
+                if (chars[i] == ' ')
+                    mappings.add(i);
+            }
+        }
 
     /*
     Methods
     */
 
-    private int spaceCount(String string)
-    {
-      return spaceCount(string, 0, string.length());
+        private int spaceCount(String string) {
+            return spaceCount(string, 0, string.length());
+        }
+
+        private int spaceCount(String string, int beginIndex, int endIndex) {
+            int spaces = 0;
+            char[] chars = string.toCharArray();
+            for (int i = beginIndex, n = endIndex; i < n; i++)
+                if (chars[i] == ' ')
+                    spaces++;
+            return spaces;
+        }
+
+        public void prepare(String input, String find, String replace) {
+            this.input = input;
+            this.find = find;
+            this.replace = replace;
+            spaceCount = spaceCount(find);
+            listIndex = 0;
+            charIndex = 0;
+        }
+
+        public void update(int beginIndex) {
+            listIndex += spaceCount(input, charIndex, beginIndex);
+            charIndex = beginIndex;
+
+            int n = spaceCount;
+            for (int j = 0, m = replace.length(); j < m; j++)
+                if (replace.charAt(j) == ' ' && --n < 0)
+                    mappings.add(listIndex++, null);
+
+            while (n-- > 0 && mappings.size() > listIndex) //fixed by lcl
+                mappings.remove(listIndex);
+        }
+
+        public Integer[] toArray() {
+            return mappings.toArray(INTEGER_ARRAY);
+        }
     }
-
-    private int spaceCount(String string, int beginIndex, int endIndex)
-    {
-      int spaces = 0;
-      char[] chars = string.toCharArray();
-      for (int i = beginIndex, n = endIndex; i < n; i++)
-        if (chars[i] == ' ')
-          spaces++;
-      return spaces;
-    }
-
-    public void prepare(String input, String find, String replace)
-    {
-      this.input = input;
-      this.find = find;
-      this.replace = replace;
-      spaceCount = spaceCount(find);
-      listIndex = 0;
-      charIndex = 0;
-    }
-
-    public void update(int beginIndex)
-    {
-      listIndex += spaceCount(input, charIndex, beginIndex);
-      charIndex = beginIndex;
-
-      int n = spaceCount;
-      for (int j = 0, m = replace.length(); j < m; j++)
-        if (replace.charAt(j) == ' ' && --n < 0)
-          mappings.add(listIndex++, null);
-
-      while (n-- > 0 && mappings.size() > listIndex) //fixed by lcl
-        mappings.remove(listIndex);
-    }
-
-    public Integer[] toArray()
-    {
-      return mappings.toArray(INTEGER_ARRAY);
-    }
-  }
 
   /*
   Attribute Section
   */
 
-  private static final Integer[] INTEGER_ARRAY = new Integer[0];
+    private static final Integer[] INTEGER_ARRAY = new Integer[0];
 
-  private final Tokenizer tokenizer;
-  private final Pattern fitting = Pattern.compile("[^A-Z0-9\\u4e00-\\u9fa5]+");
-  private final Pattern wordBreakers = Pattern.compile("([,;:\\uff0c])([A-Za-z\\u4e00-\\u9fa5]|\\s{2,})");
+    private final Tokenizer tokenizer;
+    private final Pattern fitting = Pattern.compile("[^A-Z0-9\\u4e00-\\u9fa5]+");
+    private final Pattern wordBreakers = Pattern.compile("([,;:\\uff0c])([A-Za-z\\u4e00-\\u9fa5]|\\s{2,})");
 
-  // The regular expression which will split entries by sentence splitters.
-  private final SentenceSplitter splitter;
+    // The regular expression which will split entries by sentence splitters.
+    private final SentenceSplitter splitter;
 
-  // The collection of substitutions known to the system.
-  private Map<String, String> correction;
-  private Map<String, String> protection;
-  private List<Substitution> person;
-  private List<Substitution> person2;
-  private List<Substitution> gender;
+    // The collection of substitutions known to the system.
+    private Map<String, String> correction;
+    private Map<String, String> protection;
+    private List<Substitution> person;
+    private List<Substitution> person2;
+    private List<Substitution> gender;
 
   /*
   Constructor Section
   */
 
-  /**
-  Constructs a new Transformations out of a list of sentence splitters and several substitution maps.
-  */
-  public Transformations(List<String> splitters,
-                         Map<String, Map<String, String>> substitutions,
-                         Tokenizer tokenizer)
-  {
-    this.tokenizer = tokenizer;
-    this.splitter = new SentenceSplitter(substitutions.get("protection"), splitters);
+    /**
+     * Constructs a new Transformations out of a list of sentence splitters and several substitution maps.
+     */
+    public Transformations(List<String> splitters,
+                           Map<String, Map<String, String>> substitutions,
+                           Tokenizer tokenizer) {
+        this.tokenizer = tokenizer;
+        this.splitter = new SentenceSplitter(substitutions.get("protection"), splitters);
 
-    correction = substitutions.get("correction");
-    person = newSubstitutionList(substitutions.get("person"));
-    person2 = newSubstitutionList(substitutions.get("person2"));
-    gender = newSubstitutionList(substitutions.get("gender"));
+        correction = substitutions.get("correction");
+        person = newSubstitutionList(substitutions.get("person"));
+        person2 = newSubstitutionList(substitutions.get("person2"));
+        gender = newSubstitutionList(substitutions.get("gender"));
 
-  }
+    }
 
   /*
   Method Section
   */
-  
-  private List<Substitution> newSubstitutionList(Map<String, String> inputs)
-  {
-    List<Substitution> subsitutions = new ArrayList<Substitution>(inputs.size());
-    for (Entry<String, String> entry : inputs.entrySet())
-    {
-      Substitution substitution = new Substitution(entry.getKey(), entry.getValue(), tokenizer);
-      subsitutions.add(substitution);
-    }
-    
-    return subsitutions;
-  }
 
-  private String breakWords(String input)
-  {
-    /* See the description of java.util.regex.Matcher.appendReplacement() in the Javadocs to understand this code. */
-    Matcher matcher = wordBreakers.matcher(input);
-    StringBuffer buffer = new StringBuffer();
-    while (matcher.find())
-    {
-    	
-      String replace = matcher.group(2);
-      if (replace.charAt(0) != ' ')
-        replace = matcher.group(1) + ' ' + replace;
-      else
-        replace = matcher.group(1) + ' ';
+    private List<Substitution> newSubstitutionList(Map<String, String> inputs) {
+        List<Substitution> subsitutions = new ArrayList<Substitution>(inputs.size());
+        for (Entry<String, String> entry : inputs.entrySet()) {
+            Substitution substitution = new Substitution(entry.getKey(), entry.getValue(), tokenizer);
+            subsitutions.add(substitution);
+        }
 
-      matcher.appendReplacement(buffer, replace);
+        return subsitutions;
     }
 
-    matcher.appendTail(buffer);
-    return buffer.toString();
-  }
-  
-  private String fit(String input)
-  {
-    input = input.toUpperCase();
-    Matcher matcher = fitting.matcher(input);
-    
-    return matcher.replaceAll(" ");
-  }
+    private String breakWords(String input) {
+        /* See the description of java.util.regex.Matcher.appendReplacement() in the Javadocs to understand this code. */
+        Matcher matcher = wordBreakers.matcher(input);
+        StringBuffer buffer = new StringBuffer();
+        while (matcher.find()) {
 
-  /**
-  Turns the entry to UPPERCASE, takes sequences of non-alphanumeric characters out of it (replacing them with a single whitespace) and sees that the entry is trimmed off leading and trailing whitespaces.
-  */
-  private String fit(String input, Mapper mapper)
-  {
-    input = input.toUpperCase();
-    Matcher matcher = fitting.matcher(input);
+            String replace = matcher.group(2);
+            if (replace.charAt(0) != ' ')
+                replace = matcher.group(1) + ' ' + replace;
+            else
+                replace = matcher.group(1) + ' ';
 
-    StringBuffer buffer = new StringBuffer();
-    while (!matcher.hitEnd() && (matcher.find()))
-    {
+            matcher.appendReplacement(buffer, replace);
+        }
 
-      mapper.prepare(input, matcher.group(), " ");
-      mapper.update(matcher.start());
-      matcher.appendReplacement(buffer, " ");
+        matcher.appendTail(buffer);
+        return buffer.toString();
     }
 
-    matcher.appendTail(buffer);
-    return buffer.toString();
-  }
-  
-  private String substitute(String input)
-  {
-    for (String find : correction.keySet())
-    {
-      Pattern pattern = Pattern.compile(find, CASE_INSENSITIVE | UNICODE_CASE);
-      Matcher matcher = pattern.matcher(input);
-      String replace = correction.get(find);
-      
-      input = matcher.replaceAll(replace);
+    private String fit(String input) {
+        input = input.toUpperCase();
+        Matcher matcher = fitting.matcher(input);
+
+        return matcher.replaceAll(" ");
     }
 
-    return input;
-  }
+    /**
+     * Turns the entry to UPPERCASE, takes sequences of non-alphanumeric characters out of it (replacing them with a single whitespace) and sees that the entry is trimmed off leading and trailing whitespaces.
+     */
+    private String fit(String input, Mapper mapper) {
+        input = input.toUpperCase();
+        Matcher matcher = fitting.matcher(input);
 
-  private String substitute(String input, Mapper mapper)
-  {
-    StringBuffer buffer = new StringBuffer();
-    for (String find : correction.keySet())
-    {
-    	//System.out.println("find:"+find);
-      Pattern pattern = Pattern.compile(find, CASE_INSENSITIVE | UNICODE_CASE );
-      Matcher matcher = pattern.matcher(input);
-      
-      String replace = correction.get(find);
+        StringBuffer buffer = new StringBuffer();
+        while (!matcher.hitEnd() && (matcher.find())) {
 
-      mapper.prepare(input, find, replace);
-      while (!matcher.hitEnd() && matcher.find())
-      {
-        mapper.update(matcher.start() + 1);
-        System.out.println("ss: "+matcher.group());
-        matcher.appendReplacement(buffer, replace);
-      }
+            mapper.prepare(input, matcher.group(), " ");
+            mapper.update(matcher.start());
+            matcher.appendReplacement(buffer, " ");
+        }
 
-      matcher.appendTail(buffer);
-      input = buffer.toString();
-      buffer.delete(0, buffer.length());
+        matcher.appendTail(buffer);
+        return buffer.toString();
     }
 
-    return input;
-  }
-  
-  private String transform(String input, List<Substitution> substitutions)
-  {
-    List<String> tokens = tokenizer.tokenize(input);
-    //fixed by lcl
-    if(tokens.size() == 0)
-    	return "";
-    
-    outer: for (int i = 0; i < tokens.size();)
-    {
-      int offset = i;
-      for (final Substitution substitution : substitutions)
-      {
-        i = substitution.substitute(offset, tokens);
-        if (i > offset)
-          continue outer;
-      }
-      
-      // Only gets here if no substitution matches.
-      i++;
+    private String substitute(String input) {
+        for (String find : correction.keySet()) {
+            Pattern pattern = Pattern.compile(find, CASE_INSENSITIVE | UNICODE_CASE);
+            Matcher matcher = pattern.matcher(input);
+            String replace = correction.get(find);
+
+            input = matcher.replaceAll(replace);
+        }
+
+        return input;
     }
 
-    return tokenizer.toString(tokens);
-  }
+    private String substitute(String input, Mapper mapper) {
+        StringBuffer buffer = new StringBuffer();
+        for (String find : correction.keySet()) {
+            //System.out.println("find:"+find);
+            Pattern pattern = Pattern.compile(find, CASE_INSENSITIVE | UNICODE_CASE);
+            Matcher matcher = pattern.matcher(input);
 
-  public void normalization(Request request)
-  {
-    String original = ' ' + request.getOriginal() + ' ';
-    original = original.replaceAll("\\s{2,}", " ");
+            String replace = correction.get(find);
 
-    String input[] = splitter.split(original);
-    Sentence[] sentences = new Sentence[input.length];
-    for (int i = 0, n = input.length; i < n; i++)
-    {
-      
-      sentences[i] = new Sentence(input[i]);
-      normalization(sentences[i]);     
+            mapper.prepare(input, find, replace);
+            while (!matcher.hitEnd() && matcher.find()) {
+                mapper.update(matcher.start() + 1);
+                System.out.println("ss: " + matcher.group());
+                matcher.appendReplacement(buffer, replace);
+            }
+
+            matcher.appendTail(buffer);
+            input = buffer.toString();
+            buffer.delete(0, buffer.length());
+        }
+
+        return input;
     }
-    
-    request.setOriginal(original);
-    request.setSentences(sentences);
 
-  }
+    private String transform(String input, List<Substitution> substitutions) {
+        List<String> tokens = tokenizer.tokenize(input);
+        //fixed by lcl
+        if (tokens.size() == 0)
+            return "";
 
-  public void normalization(Sentence sentence)
-  {
-    String input = breakWords(sentence.getOriginal());
+        outer:
+        for (int i = 0; i < tokens.size(); ) {
+            int offset = i;
+            for (final Substitution substitution : substitutions) {
+                i = substitution.substitute(offset, tokens);
+                if (i > offset)
+                    continue outer;
+            }
 
-    input = ' ' + input + ' ';
-    
-    input = input.replaceAll("\\s{2,}", " ");
-    sentence.setOriginal(input);
+            // Only gets here if no substitution matches.
+            i++;
+        }
 
-    Mapper mapper = new Mapper(input);
-    input = substitute(input, mapper);
-    //this is the problem
-    input = fit(input, mapper);
-       
-    sentence.setMappings(mapper.toArray());
-    sentence.setNormalized(input);
+        return tokenizer.toString(tokens);
+    }
 
-    
-  }
+    public void normalization(Request request) {
+        String original = ' ' + request.getOriginal() + ' ';
+        original = original.replaceAll("\\s{2,}", " ");
 
-  public String normalization(String input)
-  {
-    input = ' ' + input + ' ';
-    input = input.replaceAll("\\s{2,}", " ");
-    input = substitute(input);
-    input = fit(input);
+        String input[] = splitter.split(original);
+        Sentence[] sentences = new Sentence[input.length];
+        for (int i = 0, n = input.length; i < n; i++) {
 
-    return input;
-  }
+            sentences[i] = new Sentence(input[i]);
+            normalization(sentences[i]);
+        }
 
-  public String gender(String input)
-  {
-    return transform(input, gender);
-  }
+        request.setOriginal(original);
+        request.setSentences(sentences);
 
-  public String person(String input)
-  {
-    return transform(input, person);
-  }
-  
-  public String person2(String input)
-  {
-    return transform(input, person2);
-  }
+    }
+
+    public void normalization(Sentence sentence) {
+        String input = breakWords(sentence.getOriginal());
+
+        input = ' ' + input + ' ';
+
+        input = input.replaceAll("\\s{2,}", " ");
+        sentence.setOriginal(input);
+
+        Mapper mapper = new Mapper(input);
+        input = substitute(input, mapper);
+        //this is the problem
+        input = fit(input, mapper);
+
+        sentence.setMappings(mapper.toArray());
+        sentence.setNormalized(input);
+
+
+    }
+
+    public String normalization(String input) {
+        input = ' ' + input + ' ';
+        input = input.replaceAll("\\s{2,}", " ");
+        input = substitute(input);
+        input = fit(input);
+
+        return input;
+    }
+
+    public String gender(String input) {
+        return transform(input, gender);
+    }
+
+    public String person(String input) {
+        return transform(input, person);
+    }
+
+    public String person2(String input) {
+        return transform(input, person2);
+    }
 }

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -25,41 +25,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
-Log file generator.
-*/
-public class Logger
-{
+ * Log file generator.
+ */
+public class Logger {
   /*
   Attributes
   */
 
-  private static final DateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private static final DateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-  private PrintWriter writer;
+    private PrintWriter writer;
 
   /*
   Constructor
   */
 
-  /**
-  Constructs a new Log on the given directory.
-  */
-  public Logger(Writer writer)
-  {
-    this.writer =  new PrintWriter(writer, true);
-  }
+    /**
+     * Constructs a new Log on the given directory.
+     */
+    public Logger(Writer writer) {
+        this.writer = new PrintWriter(writer, true);
+    }
   
   /*
   Methods
   */
-  
-  /**
-  Adds an entry to this Log.
-  */
-  public void append(String request, String response) throws IOException
-  {
-    String now = date.format(new Date());
-  
-    writer.println("[" + now + "][" + request + "][" + response + "]");
-  }
+
+    /**
+     * Adds an entry to this Log.
+     */
+    public void append(String request, String response) throws IOException {
+        String now = date.format(new Date());
+
+        writer.println("[" + now + "][" + request + "][" + response + "]");
+    }
 }
