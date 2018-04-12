@@ -14,11 +14,11 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
-import java.io.FileInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 import bitoflife.chatterbean.parser.AliceBotParser;
+import bitoflife.chatterbean.parser.AliceBotParserConfigurationException;
+import bitoflife.chatterbean.parser.AliceBotParserException;
 import bitoflife.chatterbean.util.Searcher;
 
 public class AliceBotMother {
@@ -27,10 +27,35 @@ public class AliceBotMother {
   */
 
     private ByteArrayOutputStream gossip;
-  
-  /*
-  Event Section
-  */
+
+    private static  AliceBot bot;
+
+    static {
+        Searcher searcher = new Searcher();
+        AliceBotParser parser = null;
+        try {
+            parser = new AliceBotParser();
+        } catch (AliceBotParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        String path = AliceBotMother.class.getClassLoader().getResource("").getPath();
+        try {
+            bot = parser.parse(new FileInputStream(path + File.separator + "Bots/context.xml"),
+                    new FileInputStream(path + File.separator +  "Bots/splitters.xml"),
+                    new FileInputStream(path + File.separator +  "Bots/substitutions.xml"),
+                    searcher.search(path + File.separator +  "Bots/aimlfile", ".*\\.aiml"));
+        } catch (AliceBotParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Context context = bot.getContext();
+        context.outputStream( new ByteArrayOutputStream());
+    }
+      /*
+      Event Section
+      */
 
     public void setUp() {
         gossip = new ByteArrayOutputStream();
@@ -44,16 +69,8 @@ public class AliceBotMother {
         return gossip.toString();
     }
 
-    public AliceBot newInstance() throws Exception {
-        Searcher searcher = new Searcher();
-        AliceBotParser parser = new AliceBotParser();
-        AliceBot bot = parser.parse(new FileInputStream("Bots/context.xml"),
-                new FileInputStream("Bots/splitters.xml"),
-                new FileInputStream("Bots/substitutions.xml"),
-                searcher.search("Bots/Alice", ".*\\.aiml"));
 
-        Context context = bot.getContext();
-        context.outputStream(gossip);
-        return bot;
+    public static AliceBot newInstance() {
+        return  bot;
     }
 }

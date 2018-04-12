@@ -21,9 +21,9 @@ import bitoflife.chatterbean.text.Sentence;
 import bitoflife.chatterbean.text.Transformations;
 
 public class AliceBot {
-  /*
-  Attribute Section
-  */
+      /*
+      Attribute Section
+      */
 
     /**
      * Context information for this bot current conversation.
@@ -35,9 +35,9 @@ public class AliceBot {
      */
     private Graphmaster graphmaster;
   
-  /*
-  Constructor Section
-  */
+      /*
+      Constructor Section
+      */
 
     /**
      * Default constructor.

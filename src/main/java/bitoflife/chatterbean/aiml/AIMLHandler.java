@@ -58,6 +58,9 @@ public class AIMLHandler extends DefaultHandler {
                 tag.substring(1).toLowerCase();
     }
 
+    /**
+     *将一个节点的文本信息压入栈中，并根据参数决定是否调用中文分词器。
+     */
     private void pushTextNode() {
         String pushed = text.toString();
         text.delete(0, text.length());
