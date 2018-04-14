@@ -81,6 +81,9 @@ public class Graphmaster {
      * </ul>
      * <p>
      * If any of these nodes can not be found among this node's children, its position is filled by <code>null</code>.
+     *
+     * 存在一个极限的问题是
+     * 如果是 *XXX 比如说 川普不靠谱，这样就匹配不上 *不靠谱
      * </p>
      */
     private Graphmaster[] children(String name) {
@@ -107,8 +110,14 @@ public class Graphmaster {
     private Category matchChildren(Match match, int nextIndex) {
         Graphmaster[] nodes = children(match.getMatchPath(nextIndex));
 
+        Graphmaster node ;
         for (int i = 0, n = nodes.length; i < n; i++) {
-            Category category = (nodes[i] != null ? nodes[i].match(match, nextIndex) : null);
+            node = nodes[i];
+            Category category = null;
+            if(node != null){
+                category = nodes[i].match(match, nextIndex);
+            }
+
 
             if (category != null) return category;
         }

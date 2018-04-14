@@ -9,3 +9,8 @@ trie查找算法
 `````
 https://github.com/Mshu95/Alice
 `````
+
+### 分词器源码资源下载
+````
+https://github.com/hankcs/HanLP/releases
+````
