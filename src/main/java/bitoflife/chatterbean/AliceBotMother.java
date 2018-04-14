@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License along with Cha
 package bitoflife.chatterbean;
 
 import java.io.*;
+import java.util.Objects;
 
 import bitoflife.chatterbean.parser.AliceBotParser;
 import bitoflife.chatterbean.parser.AliceBotParserConfigurationException;
@@ -40,7 +41,7 @@ public class AliceBotMother {
         }
         String path = AliceBotMother.class.getClassLoader().getResource("").getPath();
         try {
-            bot = parser.parse(new FileInputStream(path + File.separator + "Bots/context.xml"),
+            bot = Objects.requireNonNull(parser).parse(new FileInputStream(path + File.separator + "Bots/context.xml"),
                     new FileInputStream(path + File.separator +  "Bots/splitters.xml"),
                     new FileInputStream(path + File.separator +  "Bots/substitutions.xml"),
                     searcher.search(path + File.separator +  "Bots/aimlfile", ".*\\.aiml"));
