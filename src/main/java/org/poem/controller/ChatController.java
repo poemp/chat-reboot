@@ -19,7 +19,7 @@ public class ChatController {
      */
     @RequestMapping("/ask")
     @ResponseBody
-    public String response(String question){
+    public org.poem.core.json.JsonBean response(String question){
         return chatService.response(question);
     }
 }
