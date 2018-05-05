@@ -1,5 +1,6 @@
 package org.poem.controller;
 
+import org.poem.core.json.JsonBean;
 import org.poem.service.ChatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,6 @@ public class ChatController {
     @RequestMapping("/ask")
     @ResponseBody
     public org.poem.core.json.JsonBean response(String question){
-        return chatService.response(question);
+        return new JsonBean(0,chatService.response(question));
     }
 }
