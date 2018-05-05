@@ -14,12 +14,12 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
-import java.io.InputStream;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import bitoflife.chatterbean.Graphmaster;
 import bitoflife.chatterbean.util.Searcher;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.InputStream;
 
 public class AIMLParser {
   /*
@@ -48,9 +48,9 @@ public class AIMLParser {
 
     public void parse(Graphmaster graphmaster, InputStream... sources) throws AIMLParserException {
         try {
-            for (InputStream aiml : sources)
+            for (InputStream aiml : sources) {
                 parser.parse(aiml, handler); // what's this?
-
+            }
             graphmaster.append(handler.unload());
         } catch (Exception e) {
             throw new AIMLParserException(e);

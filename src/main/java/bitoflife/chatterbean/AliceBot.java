@@ -74,7 +74,9 @@ public class AliceBot {
         if (sentence.length() > 0) {
             Match match = new Match(this, sentence, that, topic);
             Category category = graphmaster.match(match);
-            response.append(category.process(match)); // adding respon
+            if (null != category){
+                response.append(category.process(match)); // adding respon
+            }
         }
     }
 
@@ -97,7 +99,6 @@ public class AliceBot {
         Response response = new Response();
         for (Sentence sentence : request.getSentences()) {
             respond(sentence, that, topic, response);
-            //System.out.println(response);
         }
         context.appendResponse(response);
 

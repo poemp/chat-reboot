@@ -14,6 +14,8 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.util;
 
+import org.poem.utils.logger.LoggerUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +45,9 @@ public class Searcher implements FilenameFilter {
     protected String[] dir(String path, String expression) {
         this.expression = expression;
 
-        if (path.charAt(path.length() - 1) != '/') path += "/";
+        if (path.charAt(path.length() - 1) != '/') {
+            path += "/";
+        }
         File dir = new File(path);
         String[] names = dir.list(this);
         Arrays.sort(names);
@@ -78,10 +82,10 @@ public class Searcher implements FilenameFilter {
     public InputStream[] search(String path, String expression) throws IOException {
         String[] names = dir(path, expression);
         InputStream[] files = new InputStream[names.length];
-        for (int i = 0, n = names.length; i < n; i++)
+        for (int i = 0, n = names.length; i < n; i++) {
+            LoggerUtils.info(names[i]);
             files[i] = new FileInputStream(names[i]);
-
-
+        }
         return files;
     }
 
